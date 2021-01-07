@@ -1,0 +1,42 @@
+{% extends 'todo/base.html' %}
+{% block main_content %}
+
+<h1>Current todos</h1>
+
+<ul>
+	{% for i in todos %}
+	<li>
+		<content>	
+		{% if i.important %}
+		<a href='{% url "viewtodo" i.id %}'>
+			<div class="alert alert-danger">
+		{{i.title}} -->  {{i.memo}}
+			<br>
+			{{i.created}}
+		</a>
+
+		</div>
+	
+
+		{% else %}
+		<a href='{% url "viewtodo" i.id %}'>
+			<div class="alert alert-success">
+		{{i.title}} -->  {{i.memo}}
+			<br>
+			{{i.created}}
+		</a>	
+		</div>
+		</content>
+	{% endif %}
+</li>
+
+	{% endfor %}
+		
+	
+	
+	<br>
+</ul>	
+<a class="btn btn-primary" href='{% url "createtodo" %}'>Create</a>
+<a class="btn btn-primary" href='{% url "completed" %}'>Completed</a>
+
+{% endblock %}
