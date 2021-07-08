@@ -1,6 +1,13 @@
 {% extends 'todo/base.html' %}
 {% block main_content %}
 
+<style >
+	body{
+		background-color: #8076a3
+	}
+</style>
+
+<div align="center">
 <h1>Create</h1>
 
 <h2>{{error}}</h2>
@@ -12,5 +19,6 @@
 
  <button class='btn btn-primary btn-md' type='submit'>Create</button>
 </form>
+</div>
 
 {% endblock %}

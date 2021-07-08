@@ -4,28 +4,30 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from .form import TodoForm
-from .models import Todo
+from .form import TodoForm,RegisterForm,SigninForm
+from .models import Todo,visitor
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
+
+
 def signupuser(request):
 	if request.method=='GET':
-		return render(request, 'todo/signupuser.html', {'form':UserCreationForm()})
+		return render(request, 'todo/signupuser.html', {'form':RegisterForm()})
 	else:
 		if request.POST['password1']==request.POST['password2']:
 			try:
 				if len(request.POST['password1'])<8:
-					return render(request, 'todo/signupuser.html', {'form':UserCreationForm(), 'error':'weak password! Try again'})
+					return render(request, 'todo/signupuser.html', {'form':RegisterForm(), 'error':'weak password! Try again'})
 				else:	
 					user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
 					user.save()
 					login(request,user)
 					return redirect('currenttodos')
 			except IntegrityError:
-				return render(request, 'todo/signupuser.html', {'form':UserCreationForm(), 'error':'Username already taken. Try again'})				
+				return render(request, 'todo/signupuser.html', {'form':RegisterForm(), 'error':'Username already taken. Try again'})				
 		else:
-			return render(request, 'todo/signupuser.html', {'form':UserCreationForm(), 'error':'Password did not match'})
+			return render(request, 'todo/signupuser.html', {'form':RegisterForm(), 'error':'Password did not match'})
 
 
 @login_required
@@ -38,9 +40,6 @@ def logoutuser(request):
 	if request.method=='POST':
 		logout(request)
 		return redirect('signupuser')
-
-def home(request):
-	return render(request, 'todo/home.html')
 
 @login_required
 def viewtodo(request, todo_pk):
@@ -55,6 +54,7 @@ def viewtodo(request, todo_pk):
 			return redirect('currenttodos')
 		except ValueError:
 			return render(request, 'todo/currenttodos.html', {'form':form, 'todo':todo,  'error':'Bad data passed in! Try again'})	
+
 @login_required
 def deletetodo(request, todo_pk):
 	todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
@@ -77,11 +77,11 @@ def completed(request):
 
 def loginuser(request):
 	if request.method=='GET':
-		return render(request, 'todo/loginuser.html', {'form':AuthenticationForm()})
+		return render(request, 'todo/loginuser.html', {'form':SigninForm()})
 	else:
 		user = authenticate(request, username=request.POST['username'], password=request.POST['password'])		
 		if user is None:
-			return render(request, 'todo/loginuser.html', {'form':AuthenticationForm(), 'error':'username and password did not match'})
+			return render(request, 'todo/loginuser.html', {'form':SigninForm(), 'error':'username and password did not match'})
 		else:
 			login(request, user)
 			return redirect('currenttodos')

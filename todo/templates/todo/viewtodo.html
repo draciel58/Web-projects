@@ -1,7 +1,15 @@
 {% extends 'todo/base.html' %}
 {% block main_content %}
+{% load static %}
 
-{{todo.title}}
+<style >
+	body{
+		background-color: #8076a3
+	}
+</style>
+
+<div align="center">
+<h1> {{todo.title}} </h1>
 
 <form method="POST">
 
@@ -22,8 +30,7 @@
 
  <button class='btn btn-primary btn-md' type='submit'>Delete</button>
 </form>
-<br>
-
+</div>
 
 
 {% endblock %}

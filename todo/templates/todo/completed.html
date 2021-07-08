@@ -1,6 +1,16 @@
 {% extends 'todo/base.html' %}
 {% block main_content %}
 
+<style >
+	body{
+		background-color: #8076a3
+	}
+	.alert{
+		font:20px;
+	}
+</style>
+
+<div align="center">
 <h1>Completed</h1>
 
 <ul>
@@ -23,4 +33,6 @@
 
 <a class="btn btn-primary" href='{% url "createtodo" %}'>Create</a>
 <a class="btn btn-secondary" href='{% url "currenttodos" %}'>Current</a>
+</div>
+
 {% endblock %}

@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class visitor(models.Model):
+	headline = models.CharField(max_length=100,blank=True,null=True)
+	count = models.IntegerField()
+
+	def __str__(self):
+		return "Visitors_count"
+
 class Todo(models.Model):
 	title = models.CharField(max_length=100)
 	memo = models.TextField(blank=True)

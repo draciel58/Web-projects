@@ -1,84 +1,134 @@
 {% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-
-    <title>Hello, world!</title>
-  </head>
-  <body>
-
-  </div>
-</nav>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static 'static/css/main.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/92e551cba2.js" crossorigin="anonymous"></script>
+  <link rel="icon" href='{% static "cloneapp/logo-clonify.png" %}'>
   
 
-	{% if user.is_authenticated %}
+  <style>
+    body{
+      background: white;
+      font-family: 'Poppins', sans-serif;
 
- <nav class="navbar navbar-expand-lg">
+    }
+    .navbar{
+      background: white;
+      margin-bottom: 50px;
+    }
+    .navbar-light .navbar-nav .active>.nav-link{
+      color: rgb(0, 0, 0);
+      align-items: right;
+    }
+    .navbar-light .navbar-nav .nav-link{
+      color:rgb(0, 0, 0);
+      padding-right: 40px;
+      font-weight: 600;
+      transition: transform 0.2s ease-in;
+    }
+    .navbar-light .navbar-nav .nav-link:hover{
+      transform: scale3d(1.1,1.1,1.0);
+      color: rgb(17, 206, 143) ;
+    }
+
+    label{
+      color:rgb(83, 81, 81);
+    }
+
+    ::placeholder{
+      color: rgb(255, 255, 255) !important;
+      font-size: 12px;
+      font-style: oblique;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      text-align: right;
+    }
+    :placeholder-shown{
+      background: transparent;
+      border-top: 0px;
+      border-right: 0px;
+      border-left: 0px;
+    }
+  
+    .user, .pass, .btn-primary, .mail, .confpass{
+      border-radius: 0px;
+    }
+
+    .logout-nav-button{
+      background: rgb(182, 22, 22) !important;
+      border-radius: 0;
+    }
+
+
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light">
   <a class="navbar-brand" href="#">
-    <img src='{% static "todo/logo.png" %}' width="80" height="40">
+    <img src='{% static "todo/logo.png" %}' width="120" height="50">
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" href="{% url 'currenttodos' %}">Current</a>
-      <a class="nav-item nav-link" href="{% url 'completed' %}">Completed</a>
-      <a class="nav-item nav-link" href="{% url 'createtodo' %}">Create</a>
-      <a class="nav-item nav-link">Logged in as {{user.username}}</a>
-      <a class="nav-item nav-link" style="left: 90%;
-    position: absolute;
-    bottom: 0px;"><form method="POST" action="{% url 'logoutuser' %}">
-    {% csrf_token %} 
 
-  <button class="btn btn-danger btn-md" type="submit">Logout</button>
-  </form>  </a>
-      
-    </div>
-  </div>
-</nav> 
-	
+  <div class="collapse navbar-collapse float-right" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      {% if user.is_authenticated %}
+      <li class="nav-item show-name-login">
+        <a class="nav-link" href="#">Logged in as {{user.username}}</a>
+      </li>
+      <li class="nav-item show-name-login">
+        <a class="nav-link" href="{% url 'currenttodos' %}">Current</a>
+      </li>
+      <li class="nav-item show-name-login">
+        <a class="nav-link" href="{% url 'createtodo' %}">Create</a>
+      </li>
+      <li class="nav-item show-name-login">
+        <a class="nav-link" href="{% url 'completed' %}">Completed</a>
+      </li>   
+      <li class="nav-item">
+        <a class="nav-link">
+            <form method="POST" action="{% url 'logoutuser' %}">
+              {% csrf_token %}
+              <button class="btn btn-danger logout-nav-button" type="submit">Logout</button>
+            </form>
+        </a>
+      </li> 
+      {% else %}
 
-
-
-{% else %}
- 
- <nav class="navbar navbar-expand-lg navbar-light bg-light nav-else">
-  <a class="navbar-brand" href="#">
-    <img src='{% static "todo/logo.png" %}' width="80" height="40" alt="" loading="lazy">
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" href="{% url 'loginuser' %}" style="float: right;">Login</a>
-      <a class="nav-item nav-link" href="{% url 'signupuser' %}" style="float: right;">signup</a>
-    </div>
+      <li class="nav-item login-link">
+        <a class="nav-link" href="{% url 'loginuser' %}">Login</a>  
+      </li>
+      <li class="nav-item active
+      signup-nav-link">
+        <a class="nav-link" href="{% url  'signupuser' %}">Signup
+            <span class="sr-only">(current)
+            </span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
   </div>
 </nav>
-{% endif %}
-	
-       
-  	<div class="container"> 
+
+<div style="background-image: url({% static 'nature_todowoo.jpg' %});">
+{% block main_content %}
+{% endblock %}
+</div>
 
 
-  	{% block main_content %}
-  	{% endblock %}
+<script type="text/javascript" src="{% static 'static/script.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-  </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>

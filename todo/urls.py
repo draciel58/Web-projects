@@ -4,11 +4,10 @@ from . import views
 urlpatterns = [
 
    #Auth
-   path('signup/', views.signupuser, name='signupuser'),
+   path('', views.signupuser, name='signupuser'),
    path('current/', views.currenttodos, name='currenttodos'),
    path('logout/', views.logoutuser, name='logoutuser'),
    path('login/', views.loginuser, name='loginuser'),
-   path('', views.home, name='home'),
    path('create/', views.createtodo, name='createtodo'),
    path('completed/', views.completed, name='completed'),
    path('todo/<int:todo_pk>', views.viewtodo, name='viewtodo'),
